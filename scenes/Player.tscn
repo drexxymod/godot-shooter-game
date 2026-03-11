@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://duw1sqykrvwc5"]
+
+[ext_resource type="Script" uid="uid://dyml6dy10ngfs" path="res://scripts/Player.gd" id="1_v6fml"]
+[ext_resource type="Texture2D" uid="uid://fpfaw5dlious" path="res://icon.svg" id="2_3li8b"]
+[ext_resource type="Script" uid="uid://divyfrg5vycv4" path="res://scenes/bullet.gd" id="3_3li8b"]
+[ext_resource type="Script" uid="uid://cutuvh21jicsm" path="res://scenes/enemy.gd" id="4_mdl7e"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hqtel"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v6fml"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3li8b"]
+radius = 14.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mdl7e"]
+radius = 14.0
+
+[node name="player" type="CharacterBody2D" unique_id=1612933530]
+script = ExtResource("1_v6fml")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1416382454]
+shape = SubResource("RectangleShape2D_hqtel")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=32912259]
+texture = ExtResource("2_3li8b")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2097728502]
+position_smoothing_enabled = true
+
+[node name="Bullet" type="Area2D" parent="." unique_id=34436967]
+script = ExtResource("3_3li8b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bullet" unique_id=1940224233]
+shape = SubResource("CircleShape2D_v6fml")
+
+[node name="Enemy" type="CharacterBody2D" parent="." unique_id=1788918995]
+script = ExtResource("4_mdl7e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy" unique_id=1949286314]
+shape = SubResource("CircleShape2D_3li8b")
+
+[node name="Sprite2D" type="Sprite2D" parent="Enemy" unique_id=542906681]
+texture = ExtResource("2_3li8b")
+
+[node name="Hurtbox" type="Area2D" parent="Enemy" unique_id=829189803]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy/Hurtbox" unique_id=566727280]
+shape = SubResource("CircleShape2D_mdl7e")
+
+[connection signal="body_entered" from="Bullet" to="." method="_on_bullet_body_entered"]
+[connection signal="body_entered" from="Enemy/Hurtbox" to="." method="_on_hurtbox_body_entered"]
